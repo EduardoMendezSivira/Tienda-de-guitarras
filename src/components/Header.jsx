@@ -1,0 +1,85 @@
+import { useMemo, useState } from "react";
+
+export default function Header({ carrito, eliminarDelCarrito, incrementarCantidad, decrementarCantidad, vaciarElCarrito}) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const carritoLleno = useMemo(() => carrito.length === 0, [carrito]);
+  const carritoTotal = useMemo(
+    () =>
+      carrito.reduce(
+        (total, item) => total + item.quantity * item.price,
+        0
+      ),
+    [carrito]
+  );
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  return (
+    <header className="grid grid-cols-1 md:grid-cols-5 h-88 bg-cover bg-center bg-blend-overlay bg-gradient-to-r from-black/70 to-black/70" style={{backgroundImage: `url('/img/header.jpg')`}}>
+          <div className="col-start-1">
+            <img className="h-[200px] w-[200px]" src="/img/logo.svg" alt="imagen logo" />
+          </div>
+          <button className="btn btn-circle col-start-7 fixed justify-self-end m-4" popoverTarget="popover-1" style={{ anchorName: "--anchor-1" } /* as React.CSSProperties */}>
+            <svg className="size-6 shrink-0 text-white group-hover:text-gray-500" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+            </svg>
+          </button>
+          <ul className="dropdown dropdown-left mr-2 mt-2 w-116 h-100 rounded-box bg-base-300 shadow-sm" popover="auto" id="popover-1" style={{ positionAnchor: "--anchor-1" } /* as React.CSSProperties */ }>
+            <li className="">
+              <div className="p-0">
+                <div>
+                  {carritoLleno ? (
+                    <p className="text-center text-white mt-44 ">El carrito esta vacio</p>
+                  ) : (
+                    <>
+                      <table className="table">
+                          <thead>
+                            <tr>
+                              <th>Imagen</th>
+                              <th>Nombre</th>
+                              <th>Precio</th>
+                              <th>Cantidad</th>
+                            </tr>
+                          </thead>
+                        <tbody className="">
+                            {carrito.map( guitar => (
+                            <tr key={guitar.name}>
+                              <td>
+                                <img className="w-30 h-30 object-cover" src={`./img/${guitar.image}.jpg`} alt="imagen guitarra" />
+                              </td>
+                              <td>{guitar.name}</td>
+                              <td className="font-bold">{guitar.price}</td>
+                              <td className="flex items-center justify-around">
+                                <button type="button" className="btn btn-sm bg-[#fd7e14]" onClick={() => decrementarCantidad(guitar.id)}>
+                                  -                                  
+                                </button>
+                                  {guitar.quantity}
+                                <button type="button" className="btn btn-sm bg-[#fd7e14]" onClick={() => incrementarCantidad(guitar.id)}>
+                                  +
+                                </button>
+                                <button className="btn btn-sm btn-error ml-6 bg-[#fd7e14]" 
+                                type="button"
+                                onClick={() => eliminarDelCarrito(guitar.id)}
+                                >
+                                  Borrar
+                                </button>
+                              </td>
+                              
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                      <p className="flex justify-center">Total ha pagar es: ${carritoTotal}</p>
+                      <button className="btn h-12 w-[450px] mb-4 bg-[#fd7e14]" onClick={vaciarElCarrito}>Vaciar el carrito</button>
+                    </>
+                  )}
+                </div>
+              </div>
+            </li>
+          </ul>
+    </header>
+  );
+}
