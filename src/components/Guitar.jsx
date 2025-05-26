@@ -2,7 +2,15 @@ export default function Guitar({guitar, aggAlCarrito}) {
     const {id, name, description, price, image} = guitar
 
     return (
-            <div className="grid grid-cols-[123px_240px] h-[240px] bg-base-100 border-1 border-gray-700">
+        <div className="
+            transition-transform 
+            transform 
+            hover:scale-105
+            hover:shadow-lg 
+            duration-300 
+            ease-in-out
+        ">
+            <div className="grid grid-cols-[123px_240px] h-[240px] bg-base-100 border-1 border-gray-700 ">
                 <div className="indicator">
                     <span className="indicator-item p-1 rounded-md bg-[#fd7e14]">Nuevo</span>                  
                     <img src={`/img/${image}.jpg`} alt="imagen guitarra" className="h-[238px] w-[140px]"/>  
@@ -26,5 +34,6 @@ export default function Guitar({guitar, aggAlCarrito}) {
                     </div>
                 </div>
             </div>
+        </div>
     )
 }
