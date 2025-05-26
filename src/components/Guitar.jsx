@@ -13,11 +13,17 @@ export default function Guitar({guitar, aggAlCarrito}) {
                     </div>
                     <p className="text-sm pl-4">{description}</p>
                     <p className="flex justify-end card-title text-lime-500 text-3xl font-extrabold">${price}</p>
-                    <button 
-                        type="button"
-                        className="btn ml-6 mt-2 bg-[#fd7e14] text-white"
-                        onClick={() => aggAlCarrito(guitar)}
-                    >Agregar al Carrito</button>
+                    <div>
+                        <button className="btn ml-6 mt-2 bg-[#fd7e14] text-white" onClick={()=>document.getElementById('my_modal_2').showModal(aggAlCarrito(guitar)) }>Agregar al Carrito</button>
+                        <dialog id="my_modal_2" className="modal">
+                        <div className="modal-box text-white">
+                            <h3 className="font-bold text-lg">Agregado al carrito con Exito!</h3>
+                        </div>
+                        <form method="dialog" className="modal-backdrop">
+                            <button>close</button>
+                        </form>
+                        </dialog>
+                    </div>
                 </div>
             </div>
     )
